@@ -1,5 +1,11 @@
 version: 2
 jobs:
+  build: 
+    docker:
+      - image: circleci/ruby:2.4.1-jessie
+    steps:
+      - checkout
+      - run: echo "Test test"
   one:
     docker:
       - image: circleci/ruby:2.4.1-jessie
@@ -18,5 +24,9 @@ workflows:
   version: 2
   one_and_two:
     jobs:
-      - one
-      - two
+      - one:
+        requires:
+          - build
+      - two:
+        requires:
+          - build
